@@ -25,7 +25,9 @@
           }
         );
       in
-      set // { default = set.nixGLCommon set.nixGLNvidia;}
+      if system == "x86_64-linux" || system == "aarch64-linux" then
+          set // { default = set.nixGLCommon set.nixGLNvidia;}
+	else {default = base.writeScriptBin "nixGL" "echo nixGL-custom not supported on darwin";}
     ) inputs.nixgl.inputs.nixpkgs.legacyPackages;
   };
 }
